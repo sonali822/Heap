@@ -1,0 +1,1 @@
+We use PriorityQueue class to implement Heaps in Java. By default Min Heap is implemented by this class.
