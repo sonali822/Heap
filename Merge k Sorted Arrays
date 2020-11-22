@@ -60,4 +60,45 @@ TRY IT FIRST
 
 Solution -------------------------------
 
+An efficient solution is to use heap data structure. The time complexity of heap based solution is O(N Log k). where N is count of all elements
 
+Create an output array.
+Create a min heap of size k and insert 1st element in all the arrays into the heap
+Repeat following steps while priority queue is not empty.
+Remove minimum element from heap (minimum is always at root) and store it in output array.
+Insert next element from the array from which the element is extracted. If the array doesn’t have any more elements, then do nothing.
+
+
+
+
+
+/*Complete the function below*/
+class Solution{
+    public static ArrayList<Integer> mergeKArrays(int[][] arrays,int k) 
+    {
+        //create a minheap
+      PriorityQueue<Integer>pq = new PriorityQueue<>();
+      int i=0,j=arrays.length-1;
+      while(i<=j)
+      {
+          for(int m=0;m<arrays[0].length;m++)
+          {
+              if(i<j)
+              {
+                  pq.add(arrays[i][m]);
+                  pq.add(arrays[j][m]);
+              }else
+              {
+                  pq.add(arrays[i][m]);
+              }
+          }
+          i++;
+          j--;
+      }
+      ArrayList<Integer>ans = new ArrayList<>();
+      while(pq.size()>0)ans.add(pq.poll());
+      return ans;
+        
+        
+    }
+}
