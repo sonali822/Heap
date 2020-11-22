@@ -1,0 +1,55 @@
+Now we will see about the two heap solution. The base idea is to divide the list into two part.
+So first list holds the values less than the median and the second list holds all the larger values than the median.
+We can implement this idea with max and min heap. 
+In max heap all the parent nodes hold the value greater than its child nodes.
+In the min heap all the parent nodes the value lesser than its child node.
+
+We will create two heap one is max heap, Which holds the first part of the list. That is, 
+All the small values than the median and another one is min heap, Which holds the second part of the list. 
+That is, All the large values than the median.
+
+The pseudocode for this algorithm is First add the value to the max heap Then remove the top of the max heap
+and add it to the min heap. Now we need to perform the balancing.
+If the maxheap size is less than the min heap then remove the top of the min heap and add it to the max heap.
+
+The median is found by checking the size of the maxheap.
+If the maxheap size is greater than the min heap size, Then the total number of elements is odd, 
+then peek the top of the maxheap and this is the median. If the maxheap size is equal to the min heap size,
+Then the total number of elements is even, then peek the top of the maxheap and peak the top of the minheap add and divide it by 2, this is the median.
+
+
+class MedianFinder {
+
+   PriorityQueue<Integer>maxpq = new PriorityQueue<>();
+   PriorityQueue<Integer>minpq = new PriorityQueue<>();
+    
+    public MedianFinder() {
+     maxpq = new PriorityQueue<>(Collections.reverseOrder());
+    minpq = new PriorityQueue<>();
+    }
+    
+    public void addNum(int num) {
+    maxpq.offer(num);
+    minpq.offer(maxpq.poll());
+        if(maxpq.size()<minpq.size())
+        {
+            maxpq.offer(minpq.poll());
+        }
+    }
+    
+    public double findMedian() {
+      if(maxpq.size()==0)return 0;
+  return maxpq.size()>minpq.size()?maxpq.peek():(double) (maxpq.peek()+minpq.peek())/2;
+    
+      
+   
+    }
+}
+//Time complexity of adding a number is O(log n) and finding the median is O(1)
+
+/**
+ * Your MedianFinder object will be instantiated and called as such:
+ * MedianFinder obj = new MedianFinder();
+ * obj.addNum(num);
+ * double param_2 = obj.findMedian();
+ */
